@@ -15,8 +15,8 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
     return (
         loading || post === null ? <Spinner /> :
             <Fragment>
-                <Link to='/posts' className='btn'>
-                    Nazad na postove
+                <Link to='/posts' className='btn mt-3'>
+                    Nazad
                 </Link>
                 <PostItem post={post} showActions={false} />
                 <CommentForm postId={post._id} />

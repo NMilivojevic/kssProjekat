@@ -45,7 +45,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 <div className="form-group">
                     <input
                         type="text"
-                        placeholder="Ime"
+                        placeholder="Ime i Prezime"
                         name="name"
                         value={name}
                         onChange={(e) => onChange(e)}
@@ -68,6 +68,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         value={password}
                         onChange={(e) => onChange(e)}
                     />
+                   <small className="form-text">Stavite Lozinku od minimalno 6 karaktera</small>
                 </div>
                 <div className="form-group">
                     <input

@@ -28,18 +28,19 @@ const PostItem = ({
                     {text}
                 </p>
                 <p className="post-date">
-                    Posted on <Moment format="YYYY/MM/DD">{date}</Moment>
+                    Postavljeno: <Moment format="YYYY/MM/DD">{date}</Moment>
                 </p>
                 {showActions && <Fragment>
                     <button onClick={(e) => addLike(_id)} type="button" className="btn btn-light">
-                        <i className="fas fa-thumbs-up"></i>{" "}
+                        <small className="form-text">Lajkuj</small>
+                        {" "}
                         <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
                     </button>
                     <button onClick={(e) => removeLike(_id)} type="button" className="btn btn-light">
-                        <i className="fas fa-thumbs-down"></i>
+                    <small className="form-text">Ukloni Lajk</small>
                     </button>
                     <Link to={`/posts/${_id}`} className="btn btn-primary">
-                        Discussion {comments.length > 0 && (
+                        Komentari {comments.length > 0 && (
                             <span className='comment-count'>{comments.length}</span>
                         )}
                     </Link>

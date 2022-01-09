@@ -151,10 +151,10 @@ router.delete("/", auth, async (req, res) => {
         await Profile.findOneAndRemove({ user: req.user.id });
         // remove profile
         await User.findOneAndRemove({ _id: req.user.id });
-        res.json({ msg: "User removed. " });
+        res.json({ msg: "Korisnik izbrisan " });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -166,7 +166,7 @@ router.put(
     [
         auth,
         // we are gonna need validation because we are gonna have on frontend react a validation form
-        check("title", "Dodajte naslov projekta.").not().isEmpty(),
+        check("title", "Dodajte naziv projekta").not().isEmpty(),
         check("description", "Dodajte opis projekta").not().isEmpty(),
         check("from", "Dodajte datum rada na projektu").not().isEmpty(),
     ],
@@ -199,7 +199,7 @@ router.put(
             res.json(profile);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Server Error.");
+            res.status(500).send("Server greška");
         }
     }
 );
@@ -218,7 +218,7 @@ router.delete("/projects/:proj_id", auth, async (req, res) => {
         res.json(profile);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -235,13 +235,13 @@ router.get("/github/:username", async (req, res) => {
         request(options, (error, response, body) => {
             if (error) console.error(error);
             if (response.statusCode !== 200) {
-                return res.status(404).json({ msg: "No GitHub Profile Found. " });
+                return res.status(404).json({ msg: "Nije pronađen GitHub profil " });
             }
             res.json(JSON.parse(body));
         })
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 })
 

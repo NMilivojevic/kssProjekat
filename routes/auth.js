@@ -9,14 +9,14 @@ const User = require("../models/User");
 
 // @route   GET /auth
 // @desc    Test route
-// @access  Public route (token not necessary)
+// @access  Public route 
 router.get("/", auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");
         res.json(user);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 })
 
@@ -26,10 +26,10 @@ router.get("/", auth, async (req, res) => {
 router.post(
     "/",
     [
-        check("email", "Please include a valid email.").isEmail(),
+        check("email", "Unesite validan mail").isEmail(),
         check(
             "password",
-            "Password is required."
+            "Lozinka je obavezna"
         ).exists(),
     ],
     // async here and then try catch inside and then inside await for functions that return the promises
@@ -46,7 +46,7 @@ router.post(
             // see if user exists
             let user = await User.findOne({ email });
             if (!user) {
-                res.status(400).json({ errors: [{ msg: "Invalid credentials." }] });
+                res.status(400).json({ errors: [{ msg: "Nevažeći podaci" }] });
             }
 
             // return jsonwebtoken in order when user registers to be logged in right away and protect our routes with a middleware
@@ -59,7 +59,7 @@ router.post(
             // we need to match email and password and we did this compare(returns a promise) with bcrypt
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                res.status(400).json({ errors: [{ msg: "Invalid credentials." }] });
+                res.status(400).json({ errors: [{ msg: "Nevažeći podaci" }] });
             }
 
             jwt.sign(
@@ -80,7 +80,7 @@ router.post(
             );
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Server Error.");
+            res.status(500).send("Server greška");
         }
     }
 );

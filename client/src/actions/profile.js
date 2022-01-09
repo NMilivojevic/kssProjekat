@@ -13,7 +13,6 @@ import {
 
 // get current users profile 
 export const getCurrentProfile = () => async (dispatch) => {
-    // we wanna hit /profile/me
     try {
         const res = await axios.get("/profile/me"); // knows which profile to load we dont need the id because it knows because of the token we are sending as well
         dispatch({
@@ -32,7 +31,7 @@ export const getCurrentProfile = () => async (dispatch) => {
 export const getProfiles = () => async (dispatch) => {
     dispatch({ type: CLEAR_PROFILE })
     try {
-        const res = await axios.get("/profile"); // knows which profile to load we dont need the id because it knows because of the token we are sending as well
+        const res = await axios.get("/profile"); 
         dispatch({
             type: GET_PROFILES,
             payload: res.data,
@@ -93,7 +92,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         });
 
 
-        dispatch(setAlert(edit ? "Profile Updated." : "Profile Created.", "success"));
+        dispatch(setAlert(edit ? "Profil Izmenjen" : "Profil Kreiran", "success"));
 
         if (!edit) {
             history.push("/dashboard");
@@ -125,7 +124,7 @@ export const addProjects = (formData, history) => async dispatch => {
             payload: res.data,
         });
 
-        dispatch(setAlert("Projects Added.", "success"));
+        dispatch(setAlert("Projekat Dodat", "success"));
         history.push("/dashboard");
     } catch (err) {
         const errors = err.response.data.errors;
@@ -147,7 +146,7 @@ export const deleteProjects = id => async dispatch => {
             type: UPDATE_PROFILE,
             payload: res.data
         })
-        dispatch(setAlert("Project Removed", "success"));
+        dispatch(setAlert("Projekat Izbrisan", "success"));
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
@@ -159,7 +158,7 @@ export const deleteProjects = id => async dispatch => {
 // delete account and profile
 export const deleteAccount = () => async dispatch => {
     // we wanna confirm za svaki slucaj
-    if (window.confirm("Jeste li sigurni da zelite da izbrisete nalog?")) {
+    if (window.confirm("Jeste li sigurni da želite da izbrišete nalog?")) {
         try {
             await axios.delete("/profile");
             dispatch({
@@ -168,7 +167,7 @@ export const deleteAccount = () => async dispatch => {
             dispatch({
                 type: ACCOUNT_DELETED,
             })
-            dispatch(setAlert("Izbrisali ste profil"));
+            dispatch(setAlert("Profil Izbrisan"));
         } catch (err) {
             dispatch({
                 type: PROFILE_ERROR,

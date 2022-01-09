@@ -80,12 +80,12 @@ const CreateProfile = ({ createProfile, history }) => {
             value={status}
             onChange={(e) => onChange(e)}
           />
-          <small className="form-text">Kojom Oblašću IT-a želiš da se baviš <strong>(Obavezno)</strong></small>
+          <small className="form-text">Čime želiš da se baviš <strong>(Obavezno)</strong></small>
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Navedi Tehnologije koje poznaješ i softver koji koristiš"
+            placeholder="Alati, tehnologije, softver koje poznaješ i koristiš"
             name="skills"
             value={skills}
             onChange={(e) => onChange(e)}

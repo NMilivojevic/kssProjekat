@@ -33,9 +33,9 @@ const Dashboard = ({
         </Fragment>
       ) : (
         <Fragment>
-          <p>Napravite svoj profil</p>
+          <p>Napravite Svoj Profil</p>
           <Link to="/create-profile" className="btn btn-primary my-1">
-            Napravi svoj profil
+            Kreiraj Profil
           </Link>
         </Fragment>
       )}

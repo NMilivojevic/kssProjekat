@@ -17,7 +17,7 @@ const Profile = ({ getProfileById, profile: { profile, loading }, match }) => {
         <Fragment>
             {profile === null || loading ? <Spinner /> :
                 <Fragment>
-                    <Link to="/profiles" className='btn btn-light'>Nazad na profile</Link>
+                    <Link to="/profiles" className='btn btn-light mt-3'>Nazad</Link>
                     <div className='profile-grid my-1'>
                         <ProfileTop profile={profile} />
                         <ProfileAbout profile={profile} />
@@ -29,7 +29,7 @@ const Profile = ({ getProfileById, profile: { profile, loading }, match }) => {
                                 ))}
                             </Fragment>
                             ) : (
-                                <h4>Nije radjen nikakav projekat</h4>
+                                <h4>Nije rađen projekat</h4>
                             )}
                         </div>
                         {profile.githubusername && (

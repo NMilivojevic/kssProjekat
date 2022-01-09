@@ -10,17 +10,20 @@ const ProfileItem = ({ profile: {
     skills
 } }) => {
     return (
+        // large text-primary mt-3
         <div className='profile bg-light'>
-            <img src={avatar} alt="Profile" className='round-img' />
+            <img src={avatar} alt="Profile" className='round-img p-2' />
             <div>
-                <h2>{name}</h2>
-                <p>{studies}{"  -  "}<span>{yearofstudy} godina</span></p>
+                <h2 className="py-1">{name}</h2>
+                <p className='py-1'>{studies}{"  -  "}<span>{yearofstudy} godina</span></p>
                 <p>{status}</p>
-                <Link to={`/profile/${_id}`} className='btn btn-primary'>Pogledajte profil</Link>
+                <Link to={`/profile/${_id}`} className='btn btn-primary mt-1'>Pogledajte profil</Link>
             </div>
             <ul>
                 {skills.map((skill, index) => (
-                    <li key={index} className='text-primary'> 
+                    <li key={index} className='text-primary py-1'> 
+                        <i class="fas fa-arrow-right"></i>
+                        {" "}
                         {skill}
                     </li>
                 ))}

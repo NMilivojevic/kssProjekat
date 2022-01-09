@@ -12,7 +12,7 @@ const Post = require("../models/Posts");
 router.post("/",
     [
         auth,
-        check("text", "Unesite svoj post.").not().isEmpty(),
+        check("text", "Unesite svoj post").not().isEmpty(),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -32,7 +32,7 @@ router.post("/",
             res.json(post);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Server Error.");
+            res.status(500).send("Server greška");
         }
     }
 );
@@ -46,7 +46,7 @@ router.get("/", auth, async (req, res) => {
         res.json(posts);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -58,12 +58,12 @@ router.get("/:id", auth, async (req, res) => {
         const post = await Post.findById(req.params.id);
         // check if there is a post with that id
         if (!post) {
-            return res.status(404).json({ msg: "Post Not Found. " });
+            return res.status(404).json({ msg: "Post nije pronađen" });
         }
         res.json(post);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -75,13 +75,13 @@ router.delete("/:id", auth, async (req, res) => {
         const post = await Post.findById(req.params.id);
         // make sure that the user deleting the post is the user that is trying to delete the post
         if (post.user.toString() !== req.user.id) {
-            return res.status(401).json({ msg: "User not authorized." });
+            return res.status(401).json({ msg: "Korisnik nije autorizovan" });
         }
         await post.remove();
-        res.json({ msg: "Post removed. " });
+        res.json({ msg: "Post izbrisan " });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -93,14 +93,14 @@ router.put("/like/:id", auth, async (req, res) => {
         const post = await Post.findById(req.params.id);
         // check if post has already been liked by this particular user
         if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) { // if > 0 it is already been liked
-            return res.status(400).json({ msg: "Post already liked." });
+            return res.status(400).json({ msg: "Post je već lajkovan" });
         }
         post.likes.unshift({ user: req.user.id });
         await post.save();
         res.json(post.likes);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -112,7 +112,7 @@ router.put("/unlike/:id", auth, async (req, res) => {
         const post = await Post.findById(req.params.id);
         // check if post has already been liked by this particular user
         if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) { // if === 0 we havent liked it yet
-            return res.status(400).json({ msg: "post has not yet been liked." });
+            return res.status(400).json({ msg: "Post još uvek nije lajkovan" });
         }
         // get the remove index 
         const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id);
@@ -122,7 +122,7 @@ router.put("/unlike/:id", auth, async (req, res) => {
         res.json(post.likes);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 
@@ -132,7 +132,7 @@ router.put("/unlike/:id", auth, async (req, res) => {
 router.post("/comment/:id",
     [
         auth,
-        check("text", "Unesite svoj komentar.").not().isEmpty(),
+        check("text", "Kreiraj komentar").not().isEmpty(),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -155,7 +155,7 @@ router.post("/comment/:id",
             res.json(post.comments);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Server Error.");
+            res.status(500).send("Server greška");
         }
     }
 );
@@ -170,11 +170,11 @@ router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
         const comment = post.comments.find(comment => comment.id === req.params.comment_id);
         // make sure it exists
         if (!comment) {
-            return res.status(404).json({ msg: "Comment does not exist." });
+            return res.status(404).json({ msg: "Komentar ne postoji" });
         }
         // make sure the user deleting is the one that made it
         if (comment.user.toString() !== req.user.id) {
-            return res.status(401).json({ msg: "User not authorized." });
+            return res.status(401).json({ msg: "Korisnik nije autorizovan" });
         }
         // get the remove index 
         const removeIndex = post.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
@@ -184,7 +184,7 @@ router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
         res.json(post.comments);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error.");
+        res.status(500).send("Server greška");
     }
 });
 

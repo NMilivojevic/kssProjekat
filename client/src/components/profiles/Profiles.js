@@ -15,10 +15,9 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
         <Fragment>
             {loading ? <Spinner /> :
                 <Fragment>
-                    <h1 className="large-text text-primary">Studenti</h1>
+                    <h1 className="large text-primary mt-3">Studenti</h1>
                     <p className="lead">
-                        {/* <i className="fab fa-connectdevelop"></i> */}
-                        Pogledajte listu ostalih studenata i komentarisite im postove
+                        Pregled Profila Ostalih Studenata
                     </p>
                     <div className="profiles">
                         {profiles.length > 0 ? (

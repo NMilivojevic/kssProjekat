@@ -4,8 +4,6 @@ import { v4 as uuid } from "uuid";
 export const setAlert =
   (msg, alertType, timeout = 5000) =>
     (dispatch) => {
-      // id, type, payload
-      // id we are gonna install uuid
       const id = uuid();
       dispatch({
         type: SET_ALERT,
