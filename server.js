@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const config = require("config");
 
 // Setting up the server
 const app = express();
@@ -22,7 +23,7 @@ app.use("/posts", require("./routes/posts"));
 // Setting up the database
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb+srv://root:root@kssprojekat.cm22t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+        await mongoose.connect(config.get("mongoURI"));
         console.log("MongoDB Connected.")
     } catch (err) {
         console.error(err.message);

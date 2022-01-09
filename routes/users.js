@@ -4,9 +4,8 @@ const { check, validationResult } = require("express-validator");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const jwtToken = require("../config/token")
-const User = require("../models/Users");
-const token = require("../config/token");
+const config = require("config");
+const User = require("../models/User");
 
 // @route   POST /users
 // @desc    Register user
@@ -21,6 +20,7 @@ router.post(
             "Please enter a password with 6 or more characters."
         ).isLength({ min: 6 }),
     ],
+    // async here and then try catch inside and then inside await for functions that return the promises
     async (req, res) => {
         // console.log(req.body); we need a body parser to get the data from req object when we send it from postman (express.json);
         const errors = validationResult(req);
@@ -49,39 +49,36 @@ router.post(
                 avatar,
                 password,
             });
-            // encrypt password using bycript
+            // encrypt password using bycript (using documentation)
             const salt = await bcrypt.genSalt(10);
+            // hashing the password
             user.password = await bcrypt.hash(password, salt);
 
             // save user to database (returns a promise)
             await user.save();
 
-            // return jsonwebtoken in order when user registers to be logged in right away
-            // get a payload (user id
+            // return jsonwebtoken in order when user registers to be logged in right away and protect our routes with a middleware
             // const payload = {
-            //   user: {
-            //     id: user.id,
-            //   },
-            // };
-
-
+            //     user: {
+            //         id: user.id
+            //     }
+            // }
             jwt.sign(
+                // first we get the payload, the user data = we only need id
                 {
                     user: {
                         id: user.id,
                     },
                 },
-                token.jwtToken,
+                config.get("jwtSecret"),
                 {
-                    expiresIn: 3600000,
+                    expiresIn: 3600000
                 },
                 (err, token) => {
                     if (err) throw err;
                     res.json({ token });
                 }
             );
-
-            res.send("User registered.");
         } catch (err) {
             console.error(err.message);
             res.status(500).send("Server Error.");

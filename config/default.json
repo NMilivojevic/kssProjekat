@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://root:root@kssprojekat.cm22t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "tajnitoken",
+  "githubClientID": "b316b4592b8941c4f43b",
+  "githubSecret": "3601e61f1c89ad6699db0cbdee1824e7390a03a8"
+}
